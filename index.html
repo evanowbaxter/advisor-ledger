@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advisor Red Flags Ledger — English Translation</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --border: #e0ddd6;
+    --text: #1a1a1a;
+    --muted: #6b6860;
+    --accent: #c0392b;
+    --accent-light: #fdf0ef;
+    --tag-bg: #eeecea;
+    --rebuttal: #f0f7f0;
+    --rebuttal-border: #27ae60;
+    --disputed: #fffbf0;
+    --disputed-border: #f39c12;
+    --university: #1a237e;
+    --university-bg: #e8eaf6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  header {
+    background: var(--text);
+    color: #fff;
+    padding: 2rem 2.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+  header .badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  #search-wrap {
+    flex: 1;
+    min-width: 200px;
+    max-width: 420px;
+  }
+  #search {
+    width: 100%;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    outline: none;
+  }
+  #search::placeholder { color: #888; }
+  #search:focus { border-color: #888; }
+  .filter-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-right: 0.25rem; }
+  .chip {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .chip:hover, .chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .stats-bar {
+    background: var(--accent-light);
+    border-bottom: 1px solid #f0c0bd;
+    padding: 0.5rem 2.5rem;
+    font-size: 12px;
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    gap: 2rem;
+  }
+  main { padding: 2rem 2.5rem; max-width: 980px; }
+  .preamble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--university);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .preamble h2 { font-size: 13px; color: var(--university); font-family: 'IBM Plex Mono', monospace; margin-bottom: 0.5rem; }
+  .preamble p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .school-section { margin-bottom: 2.5rem; }
+  .school-header {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--university);
+    background: var(--university-bg);
+    padding: 6px 14px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .advisor-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .advisor-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .advisor-card.disputed { border-left: 3px solid var(--disputed-border); }
+  .advisor-card.hide { display: none; }
+  .advisor-header {
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .advisor-header:hover { background: #fafafa; }
+  .advisor-name {
+    font-weight: 600;
+    font-size: 16px;
+    flex: 1;
+  }
+  .advisor-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .tag {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .tag.disputed-tag { background: var(--disputed); color: #b7770d; border-color: #f0c060; }
+  .tag.profile-tag { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+  .profile-link {
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: #2e7d32;
+    text-decoration: none;
+    background: #e8f5e9;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid #a5d6a7;
+    white-space: nowrap;
+  }
+  .profile-link:hover { background: #c8e6c9; }
+  .toggle-icon {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .advisor-body { display: none; padding: 0 1.25rem 1.25rem; border-top: 1px solid var(--border); }
+  .advisor-body.open { display: block; }
+  .flags-list { margin: 1rem 0; }
+  .flag-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f0ede8;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .flag-item:last-child { border-bottom: none; }
+  .flag-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+  .rebuttal-section {
+    background: var(--rebuttal);
+    border: 1px solid #b2dfdb;
+    border-left: 3px solid var(--rebuttal-border);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.75rem;
+    font-size: 13px;
+    color: #2d6a4f;
+  }
+  .rebuttal-section strong {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+    color: #1b5e20;
+  }
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+  .warning-note {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    font-size: 13px;
+    color: #795548;
+    margin-bottom: 1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div style="background:#1a1a1a; color:#aaa; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 2.5rem; border-bottom:1px solid #333; display:flex; gap:2rem; flex-wrap:wrap;">
+  <span>📄 Translation of: <a href="https://the-hidden-fish.github.io/advisor-ledger/" target="_blank" style="color:#7ec8e3; text-decoration:none;">the-hidden-fish.github.io/advisor-ledger</a></span>
+  <span>🔗 Original Google Doc: <a href="https://docs.google.com/document/d/1-AtKUh-xE1CPRRDVlfPx1d42Trhr7F8qQIw69hP85Ds" target="_blank" style="color:#7ec8e3; text-decoration:none;">docs.google.com</a></span>
+  <span>📅 Data snapshot: April 20, 2026</span>
+  <span>🌐 Translated to English by Claude (Anthropic)</span>
+</div>
+<header>
+  <h1>📋 ADVISOR RED FLAGS LEDGER</h1>
+  <span class="badge">ENGLISH TRANSLATION</span>
+  <div id="search-wrap">
+    <input type="text" id="search" placeholder="Search by name or university..." oninput="doSearch()">
+  </div>
+</header>
+
+<div class="filter-bar">
+  <span class="filter-label">FILTER:</span>
+  <span class="chip active" onclick="filterAll(this)">All</span>
+  <span class="chip" onclick="filterDisputed(this)">⚠ Disputed</span>
+  <span class="chip" onclick="filterHasRebuttal(this)">✓ Has Rebuttal</span>
+  <span class="chip" onclick="filterHasProfile(this)">🔗 Has Profile Link</span>
+</div>
+
+<div class="stats-bar">
+  <span id="stat-count">— advisors listed</span>
+  <span id="stat-shown">— showing</span>
+</div>
+
+<main>
+
+<div class="preamble">
+  <h2>About this document</h2>
+  <p>This is an English translation of a crowdsourced document created by Chinese PhD students to share observations about advisor experiences, lab environments, and advising styles. <strong>This document includes both negative reports ("red flags") and rebuttals from lab members defending their advisors.</strong> Many entries are disputed. Please read critically and form your own judgment. The original document explicitly warns against fabricating information and encourages factual, responsible sharing.</p>
+</div>
+
+<div class="warning-note">
+  ⚠️ <strong>Important:</strong> Some entries in this document are actively contested. Tags marked <em>"Disputed"</em> have received rebuttals from people claiming the negative reports are false or exaggerated. This translation preserves both critical accounts and rebuttals for balanced reading.
+</div>
+
+<!-- ============= US ============= -->
+
+<!-- Stanford -->
+<div class="school-section" data-school="stanford">
+  <div class="school-header">🏛 Stanford University</div>
+
+  <div class="advisor-card" data-name="Stanley Lei Qi" data-school="Stanford" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Stanley Lei Qi</div>
+        <div class="advisor-meta">
+          <span class="tag">Stanford</span>
+          <span class="tag">Biology / CRISPR</span>
+          <a class="profile-link" href="https://qi.stanford.edu" target="_blank" onclick="event.stopPropagation()">🔗 Lab website</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Multiple PhD students and postdocs have reportedly suffered serious psychological pressure (PUA-style manipulation) and varying degrees of depression. Students are treated as disposable — those who don't produce results face constant coldness and are blocked from graduating.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly sexually harasses female students at events. Accused of operating a clique (particularly with Tsinghua connections), suppressing students, and engaging in favoritism/nepotism (powerful families reportedly place children in his lab).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Jiajun Wu" data-school="Stanford" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Jiajun Wu</div>
+        <div class="advisor-meta">
+          <span class="tag">Stanford</span>
+          <span class="tag">Computer Vision / AI</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://jiajunwu.com" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Reports of students returning from summer research in poor mental states — one reportedly went into industry despite having multiple first-author papers; another allegedly received a negative recommendation letter.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal from lab members</strong>
+        Multiple people who did summer research in Jiajun's lab report very positive experiences: fastest period of research growth, very nice advisor, all interns from one cohort got into top-10 PhD programs. Jiajun is described as extremely supportive for PhD applications — proactively reaching out to discuss applications, submitting 15+ letters within 5 minutes. Caveats: the lab is competitive with many strong interns, so outcomes relative to expectations may vary.
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Shuran Song" data-school="Stanford" data-disputed="true" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Shuran Song</div>
+        <div class="advisor-meta">
+          <span class="tag">Stanford</span>
+          <span class="tag">Robotics</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://shurans.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>One comment says Shuran is "a very excellent professor" and that the difference in student happiness between her lab and Fisher Yu's lab shows who caused a past controversy. Another notes she treats students well now but was reportedly different before tenure.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CMU -->
+<div class="school-section" data-school="cmu">
+  <div class="school-header">🏛 Carnegie Mellon University (CMU)</div>
+
+  <div class="advisor-card" data-name="Min Xu" data-school="CMU" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Min Xu</div>
+        <div class="advisor-meta">
+          <span class="tag">CMU</span>
+          <span class="tag">Computational Biology / Cryo-ET</span>
+          <a class="profile-link" href="https://xulabs.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Lab</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly has 1,000+ interns in a Slack group with 2,000+ people (free plan). Classic "fishing pond" — recruits heavily but provides no real guidance.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Postdocs are reportedly low quality — some can't read a loss function — and provide no mentorship. Only pushes students without giving direction.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Lab is reportedly very underfunded — 100+ people sharing one 3090 GPU server. Advertises grand plans to Research Assistants but rarely converts to PhD slots. Known for years of not attracting new PhD students; previous ones reportedly quit.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Considered one of the "three high-volume paper producers" in Chinese CS academia (alongside Dacheng Tao and Philip S. Yu).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Justin Chan" data-school="CMU" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Justin Chan</div>
+        <div class="advisor-meta">
+          <span class="tag">CMU</span>
+          <span class="tag">Systems / Networking</span>
+          <a class="profile-link" href="https://justinchan.org" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Recruited 3 PhD students in his first year as AP; dismissed 2 within less than a year.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly said: "Female researchers always have to rely on male researchers."</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly took credit from a visiting PhD student: the visiting student worked 6 months on a project; when his own PhD student couldn't produce results, he gave the visiting student's work to his own PhD student, who ended up as 5th author while the visiting student got nothing.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rice -->
+<div class="school-section" data-school="rice">
+  <div class="school-header">🏛 Rice University</div>
+
+  <div class="advisor-card" data-name="Tong (Tony) Geng" data-school="Rice" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Tong (Tony) Geng</div>
+        <div class="advisor-meta">
+          <span class="tag">Rice University</span>
+          <span class="tag">ECE / Computer Architecture</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://tonygeng.net" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>At his previous position at University of Rochester ECE (as AP), all 3 of his first-year students quit before the year ended. He was also reported to the department and college. The story reportedly became well-known across all of Rochester. He then moved to Rice, where more students reportedly quit.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Lab homepage membership changes frequently — students come and go rapidly.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>One person's close friend was in the lab and showed significant mental health deterioration — stopped socializing and playing sports.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly required students to sign confidentiality agreements privately, prohibiting sharing of any work including ideas, slides, and papers — threatened jail for violations.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly said to a student wanting to withdraw: "If you quit, I'll resign! Let's see if the department chair listens to you or me! You won't even get a Master's degree! (The chair and I are buddies!)"</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly required an older student to "donate" a first-authorship to each new student as a "tradition" — this was reportedly reported to the department chair.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Late-night phone calls (reportedly 1am) to students.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal / Other Perspective</strong>
+        One account says the first-year situation was due to a new AP being too aggressive under work pressure — students who quit did publish decent papers and found good positions afterward. A more recent account from a friend in the lab says things are now normal: professor is professional, doesn't contact after 6pm or on weekends, communicates via Teams/email not WeChat, keeps promises, and gives hands-on guidance.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UCR -->
+<div class="school-section" data-school="ucr">
+  <div class="school-header">🏛 UC Riverside</div>
+
+  <div class="advisor-card" data-name="Zheng Sika" data-school="UCR" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Zheng Sika</div>
+        <div class="advisor-meta">
+          <span class="tag">UCR — School of Medicine</span>
+          <span class="tag">Biomedical Research</span>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Has funding but keeps students as TAs; when asked about becoming an RA, response is "you're not working hard enough."</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Can drag a single rotation project on for 4 years.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>When students try to switch advisors, reportedly gives them a failing grade without hesitation — exploiting the school policy that 2 F's result in automatic dismissal.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Disappears for 2 months (vacation), then returns and requires a complete redo of all work after a 30-minute review.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Two students switched labs / dropped out within one year; one persistent student was failed right before their final month of graduation.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Wrote in an annual progress review: "None of their stuff makes any sense / I don't endorse it."</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Requires daily reports; weekly reports must be revised within 24 hours; if the report is on a Friday, the entire weekend is consumed by corrections.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Told a student the week before their candidacy exam to redo everything, and when asked what to do, replied: "Do your candidacy exam."</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Attempted to claim authorship on an unrelated paper from a student who switched labs, with threats of legal action without evidence.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Northwestern -->
+<div class="school-section" data-school="northwestern">
+  <div class="school-header">🏛 Northwestern University</div>
+
+  <div class="advisor-card" data-name="Kaize Ding" data-school="Northwestern" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Kaize Ding</div>
+        <div class="advisor-meta">
+          <span class="tag">Northwestern</span>
+          <span class="tag">Data Mining / Graph Neural Networks</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://kaize0409.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Controversy with a female student publicized on Chinese social media (Xiaohongshu). Allegations of an inappropriate relationship. The student who reportedly filed a complaint was later dismissed — but reportedly for academic misconduct, with the person then allegedly posting defamatory content.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Criticism of research output: accused of "pumping out low-quality GNN papers." Counter-arguments note the field itself has matured and he now supports newer directions (agents, LLMs).</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal from former intern</strong>
+        Former intern says Kaize is excellent to students and interns: very actively helps find internships (personally used his connections), writes thorough recommendation letters (helped with ~20 applications), meticulously reviews papers, fair authorship (by contribution). Multiple people strongly endorse him as a good advisor.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IUB -->
+<div class="school-section" data-school="iub">
+  <div class="school-header">🏛 Indiana University Bloomington</div>
+
+  <div class="advisor-card" data-name="Fengguang Song" data-school="IUB" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Fengguang Song</div>
+        <div class="advisor-meta">
+          <span class="tag">Indiana University Bloomington</span>
+          <span class="tag">HPC / Systems</span>
+          <a class="profile-link" href="https://cs.iupui.edu/~fgsong/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>After taking over a lab from a previous professor, 5 students left within 2 years.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Weak research ability — reportedly uses ChatGPT to respond to students, including live during lab meetings.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Forces students to read 5–10 year old papers found via AI search, treating them as ground truth.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Teaches his own online course but gives his lab's PhD students B grades while tightly monitoring attendance.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Sends large batches of AI-generated emails every Saturday night at 11pm.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Uses administrative tools to make life difficult: goes back on promises about internships; deliberately blocks required credits; manipulates scholarship disbursement.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Refused to sign a CPT letter for a student's fall internship (citing "prepare to graduate"), then on the first week of fall semester told the student to find a new advisor or quit.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MIT -->
+<div class="school-section" data-school="mit">
+  <div class="school-header">🏛 MIT</div>
+
+  <div class="advisor-card" data-name="Wojciech Matusik" data-school="MIT" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Wojciech Matusik</div>
+        <div class="advisor-meta">
+          <span class="tag">MIT CSAIL</span>
+          <span class="tag">Computer Graphics / Fabrication</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://cdfg.mit.edu/wojciech" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Some criticism about a lab member (Zhiyang Duo) publishing many papers with 10+ interns, 11 affiliations on one paper. The original critic retracted, clarifying it was a dataset paper where many students reviewed data quality, justifying the author list.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal from lab member</strong>
+        Lab atmosphere described as good. Matusik himself is described as extremely hardworking. Good funding — free lunch/dinner, large refrigerator. The domain is actually difficult to publish in, making "high volume" criticism less fair.
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Manya Ghobadi" data-school="MIT" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Manya Ghobadi</div>
+        <div class="advisor-meta">
+          <span class="tag">MIT CSAIL</span>
+          <span class="tag">Networking / Optical Networks</span>
+          <a class="profile-link" href="https://people.csail.mit.edu/ghobadi/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly left Google in under a year. Went to Microsoft and took a step back in role (postdoc).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>MIT faculty position allegedly obtained and maintained through her partner (Adam Chlipala, MIT faculty).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly fabricates data in papers; focuses on storytelling rather than new algorithms.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Does not actually understand networking, security, or optics — but insists on working in optical network security.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly has emotional breakdowns in 1-on-1 meetings and treats students as therapists.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly keeps students waiting 30+ minutes outside her office and blames being busy.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Authorship reportedly unfair — graduate students who do the most work must yield first authorship to undergraduates to make her look like a great mentor.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Dismissed a male Chinese postdoc, leaving him in J-visa difficulty; he was absorbed by her partner's group.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly severely underfunded; uses a startup to keep appearances and pressures students to work there.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NJIT -->
+<div class="school-section" data-school="njit">
+  <div class="school-header">🏛 NJIT</div>
+  <div class="advisor-card" data-name="Hai Phan" data-school="NJIT" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Hai Phan</div>
+        <div class="advisor-meta">
+          <span class="tag">NJIT</span>
+          <span class="tag">Machine Learning / Privacy</span>
+          <a class="profile-link" href="https://haiphannjit.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of racial discrimination — reportedly mocked an applicant's accent during an interview and repeatedly questioned the value of their research in an arrogant manner.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UCSD -->
+<div class="school-section" data-school="ucsd">
+  <div class="school-header">🏛 UC San Diego</div>
+
+  <div class="advisor-card" data-name="Zhiting Hu" data-school="UCSD" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Zhiting Hu</div>
+        <div class="advisor-meta">
+          <span class="tag">UCSD</span>
+          <span class="tag">NLP / World Models</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://zhitinghu.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Left UCSD for xAI; unclear what happens to remaining PhD students.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of being a "couple shop" (spouses Zhiting Hu and Lianhui Qin sharing PhD students).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Some claim he's weak academically and "relies on his wife."</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal</strong>
+        Countered strongly: most PhDs graduated on time (3–4 years), good industry funding, excellent student outcomes (top-10 faculty positions, top companies). Students work in industry part-time using industry resources — described as appropriate for the field. Described as a "rising star" with many awards. Wrote strong recommendation letters for all interns. Lab is said to be well-resourced (one of the best-funded in the US).
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Lianhui Qin" data-school="UCSD" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Lianhui Qin</div>
+        <div class="advisor-meta">
+          <span class="tag">UCSD</span>
+          <span class="tag">NLP</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://lianhui.ucsd.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of being weak academically and "relying on her husband" (Zhiting Hu). Counter-comments suggest she tends to ghost meetings but is otherwise fine. Many say she is a good advisor overall.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Nuno Vasconcelos" data-school="UCSD" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Nuno Vasconcelos</div>
+        <div class="advisor-meta">
+          <span class="tag">UCSD ECE</span>
+          <span class="tag">Computer Vision</span>
+          <a class="profile-link" href="http://www.svcl.ucsd.edu/~nuno/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as a "legendary graduation delayer" — average time-to-degree reportedly 7 years.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly requires 7+ top-conference first-author papers before allowing a defense.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly out of touch with current research; uses 8-GPU clusters to do pretraining.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Poor industry relationships — students struggle to find internships and some are on industry blacklists.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Recruits 2 first-year PhD students and lets them compete for funding; whoever produces results first gets funded, the other must switch or quit. (Note: reportedly due to funding shortfalls, not deliberate "gladiator" strategy.)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Xinyu Zhang" data-school="UCSD" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Xinyu Zhang</div>
+        <div class="advisor-meta">
+          <span class="tag">UCSD ECE</span>
+          <span class="tag">Wireless / Mobile Systems</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://xinyu.ece.ucsd.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as a "grind culture" professor — workaholic who neglects family and health, very push-oriented.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal</strong>
+        A former MS student says Zhang is a good person, taught a lot, was likely very helpful for PhD applications, and that following him seriously leads to great outcomes. His being a workaholic is noted as genuine, not performative.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UTD -->
+<div class="school-section" data-school="utd">
+  <div class="school-header">🏛 UT Dallas</div>
+  <div class="advisor-card" data-name="Xinya Du" data-school="UTD" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Xinya Du</div>
+        <div class="advisor-meta">
+          <span class="tag">UT Dallas</span>
+          <span class="tag">NLP</span>
+          <a class="profile-link" href="https://xinyadu.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Meeting frequently late without notice; during meetings, spends 50%+ of the time asking the same questions repeatedly and misses the research focus.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Forces students to work when ill.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Communication problems — unclear in both Chinese and English.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Multiple students have quit (described as a red flag to avoid).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly made multiple failed attempts to move to a better institution.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UCSC -->
+<div class="school-section" data-school="ucsc">
+  <div class="school-header">🏛 UC Santa Cruz</div>
+  <div class="advisor-card" data-name="Chenguang Wang" data-school="UCSC" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Chenguang Wang</div>
+        <div class="advisor-meta">
+          <span class="tag">UCSC</span>
+          <span class="tag">NLP</span>
+          <a class="profile-link" href="https://wangchenguang.com" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as extremely inconsistent — reverses decisions frequently (e.g., agrees to submit to a conference then cancels hours before the deadline).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Sent a legal threat letter (via a Chinese law firm) to someone who posted a Xiaohongshu warning about him.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>All first-year PhD students reportedly quit, and he then allegedly spread rumors about those who left.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Refuses to let lab members collaborate with each other; ignores warnings about scope overlap with competing labs.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Threatened a Master's student's graduation — reportedly followed through, delaying graduation by a semester.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Required a student to write an email in front of him canceling their rotation at another lab — with that email BCC'd to him.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Forced students to work until 3am; opened Zoom calls and yelled at students who left early.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Moved to UCSC from WUSTL after reportedly failing to keep students (several were reportedly taken away by other advisors).</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UChicago -->
+<div class="school-section" data-school="uchicago">
+  <div class="school-header">🏛 University of Chicago</div>
+  <div class="advisor-card" data-name="Junchen Jiang" data-school="UChicago" data-disputed="true" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Junchen Jiang</div>
+        <div class="advisor-meta">
+          <span class="tag">UChicago</span>
+          <span class="tag">Networking / Systems</span>
+          <a class="profile-link" href="https://people.cs.uchicago.edu/~junchenj/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Lab atmosphere mentioned — no specific details provided in the original document beyond vague concerns.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Princeton -->
+<div class="school-section" data-school="princeton">
+  <div class="school-header">🏛 Princeton University</div>
+
+  <div class="advisor-card" data-name="Felix Heide" data-school="Princeton" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Felix Heide</div>
+        <div class="advisor-meta">
+          <span class="tag">Princeton CS</span>
+          <span class="tag">Computational Imaging / Optics</span>
+          <a class="profile-link" href="https://www.cs.princeton.edu/~fheide/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as "the most outrageous professor I've ever seen" and "the most toxic in Princeton CS, bar none."</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Extreme ego; reportedly threatens to block student graduation, internships, qualifying exams, and funding.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reported to the department dozens of times — but continues the same behavior.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Poor reputation in academia and industry; reportedly bad relationship with Stanford colleagues.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly all early PhD students either got master's degrees and left, quit, or transferred.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Mengdi Wang" data-school="Princeton" data-disputed="false" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Mengdi Wang</div>
+        <div class="advisor-meta">
+          <span class="tag">Princeton ORFE</span>
+          <span class="tag">Reinforcement Learning / Optimization</span>
+          <a class="profile-link" href="https://mwang.princeton.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Recruits very many interns — described as a "couples shop" (married to Prof. Congle from TAMU).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>A postdoc in the group (Northwestern background, Peking University PhD) reportedly habitually steals first authorship — well-known for this on Xiaohongshu.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly doesn't fund people after over-recruiting.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal</strong>
+        One collaborator says Prof. Wang is very nice and very busy, and the experience was positive overall.
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Zhuang Liu" data-school="Princeton" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Zhuang Liu</div>
+        <div class="advisor-meta">
+          <span class="tag">Princeton CS</span>
+          <span class="tag">Computer Vision / Deep Learning</span>
+          <a class="profile-link" href="https://liuzhuang13.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Student reportedly quit (or switched advisors) in his first year as AP.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly treats interns poorly; no return offers given to any. Counter-claim: a few interns had good PhD application outcomes despite no return.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Suspicion of academic integrity issues — author order allegedly manipulated on papers.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPenn -->
+<div class="school-section" data-school="upenn">
+  <div class="school-header">🏛 University of Pennsylvania</div>
+
+  <div class="advisor-card" data-name="Lingjie Liu" data-school="UPenn" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Lingjie Liu</div>
+        <div class="advisor-meta">
+          <span class="tag">UPenn CIS</span>
+          <span class="tag">3D Vision / Computer Graphics</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://lingjie0206.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of having poor technical skills, high control, being mean to students, and verbally attacking students in meetings.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>2 students out of 5 left — but claimed they were dismissed, not that they quit; one reportedly transferred to an NLP lab; the other re-applied to PhD programs.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly poor reputation makes it hard to recruit good students.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly threatened students when she was a postdoc at MPI.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Authorship of key papers questioned.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal from collaborators and others</strong>
+        Multiple collaborators say she is very reliable, willing to provide resources, has very broad connections, deep understanding of vision topics, and was very helpful. Former intern says she is kind and approachable. An MPI person who was there at the time says the dismissal story is incorrect — the student was struggling and better suited for HCI; the decision came from the department, not Lingjie. One collaborator specifically praised her as among the best they've worked with for paper feedback.
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Jiatao Gu" data-school="UPenn" data-disputed="false" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Jiatao Gu</div>
+        <div class="advisor-meta">
+          <span class="tag">UPenn</span>
+          <span class="tag">NLP / Generative Models</span>
+          <span class="tag">✓ Positive mentions</span>
+          <a class="profile-link" href="https://jiataogu.me" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="rebuttal-section">
+        <strong>Generally positive</strong>
+        Multiple people say Jiatao is very good — full of insights, very nice, very hard-working but doesn't pressure students. Married to Lingjie Liu (UPenn). Came from Apple; described as a great advisor who should be on the "positive" list. Several people strongly recommend him.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Columbia -->
+<div class="school-section" data-school="columbia">
+  <div class="school-header">🏛 Columbia University</div>
+
+  <div class="advisor-card" data-name="Sharon Di" data-school="Columbia" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Sharon Di</div>
+        <div class="advisor-meta">
+          <span class="tag">Columbia</span>
+          <span class="tag">Civil Engineering / Transportation AI</span>
+          <a class="profile-link" href="https://sharondi-columbia.wixsite.com/ditectlab" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Recruits dozens of MS students school-wide as a "gladiator pit" — the best performer gets to stay for a PhD.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Extremely demanding — meetings on weekends, evenings, and holidays are normal.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Xiaodong Wang" data-school="Columbia" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Xiaodong Wang</div>
+        <div class="advisor-meta">
+          <span class="tag">Columbia EE</span>
+          <span class="tag">Communications / Signal Processing</span>
+          <a class="profile-link" href="http://www.ee.columbia.edu/~wangx/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Student reportedly developed depression.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly runs external paid projects.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Baron Law" data-school="Columbia" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Baron Law</div>
+        <div class="advisor-meta">
+          <span class="tag">Columbia</span>
+          <span class="tag">Adjunct / AI</span>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Adjunct professor who recruits students to intern at his company — but provides no computing resources or research direction.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Students reportedly developed depression; he then engaged in office politics and micromanagement.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Monitors attendance and working hours closely; eventually assigned students tasks completely unrelated to research.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly a Hong Kong native who openly discriminates against mainland Chinese students.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UCB -->
+<div class="school-section" data-school="ucb">
+  <div class="school-header">🏛 UC Berkeley</div>
+
+  <div class="advisor-card" data-name="Sergey Levine" data-school="UCB" data-disputed="true" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Sergey Levine</div>
+        <div class="advisor-meta">
+          <span class="tag">UC Berkeley BAIR</span>
+          <span class="tag">Reinforcement Learning / Robotics</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://people.eecs.berkeley.edu/~svlevine/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>A Reddit post about abuse at BAIR was linked — the abuse reportedly came primarily from a postdoc, not Levine directly.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly forces students into research directions they don't like.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Over 90% of papers reportedly cannot be reproduced.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly runs many intern competitions with only the "winner" getting a strong recommendation.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JHU -->
+<div class="school-section" data-school="jhu">
+  <div class="school-header">🏛 Johns Hopkins University</div>
+
+  <div class="advisor-card" data-name="Mathias Unberath" data-school="JHU" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Mathias Unberath</div>
+        <div class="advisor-meta">
+          <span class="tag">JHU</span>
+          <span class="tag">Medical AI / Computer Vision</span>
+          <a class="profile-link" href="https://www.cs.jhu.edu/~unberath/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Very bad temper; recruits many interns but doesn't know them personally (can't even recognize their names).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Promises interns first-authorship opportunities after doing "horizontal tasks" — but when work is completed, the first authorship goes to a junior PhD student, second authorship to another lab member, and extra authors are added without contribution.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Refuses to write recommendation letters for interns, or writes negative ones.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly treats his own PhD students better than interns; essentially exploits interns to produce results for PhDs.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Jason Eisner" data-school="JHU" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Jason Eisner</div>
+        <div class="advisor-meta">
+          <span class="tag">JHU</span>
+          <span class="tag">NLP / Computational Linguistics</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://www.cs.jhu.edu/~jason/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Extremely strict. Described as "definitely an excellent advisor" but requiring absolute confidence in your intelligence and physical stamina.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UIUC -->
+<div class="school-section" data-school="uiuc">
+  <div class="school-header">🏛 University of Illinois Urbana-Champaign</div>
+
+  <div class="advisor-card" data-name="Jimeng Sun" data-school="UIUC" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Jimeng Sun</div>
+        <div class="advisor-meta">
+          <span class="tag">UIUC CS</span>
+          <span class="tag">AI for Healthcare</span>
+          <a class="profile-link" href="https://www.sunlab.org" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>When moving from Georgia Tech to UIUC, reportedly dismissed essentially all his existing students without proper arrangements.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>A student reportedly died before a WWW 2021 paper deadline — Jimeng allegedly insisted they submit the paper regardless ("even if you have to fabricate data"), and the student died. This is stated as known within the data mining community.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>At Georgia Tech: Chinese students without a first-author paper in year 1 were reportedly dismissed; students in their 3rd or 4th year were also dismissed.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly abandoned his family for another relationship, and reportedly directs students to work at his partner's company.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of discriminating against women and favoring white students over pushing Chinese students.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UW-Madison -->
+<div class="school-section" data-school="uwmadison">
+  <div class="school-header">🏛 UW-Madison</div>
+
+  <div class="advisor-card" data-name="Sikai Chen" data-school="UW-Madison" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Sikai Chen</div>
+        <div class="advisor-meta">
+          <span class="tag">UW-Madison</span>
+          <span class="tag">Transportation AI / Autonomous Systems</span>
+          <a class="profile-link" href="https://sikai-chen.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of fabricating papers when he was a student.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Pushed a student to write proposals while they were recovering from back surgery (bedridden).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Forced students to drive him to the airport in the middle of the night; required students to do dishes at his home.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Did not buy student computers but bought one for his wife; doesn't reimburse meeting expenses for students but does for his wife's meals.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>When he was a postdoc, reportedly made students pay his rent.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Steals junior students' first authorship; requires all labmate-to-advisor emails to CC him.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Invites students to dinner, then makes students pay.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Technically clueless — reportedly pointed at unsupervised learning and asked "Is this supervised or what? I don't know, do you?"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Sharon Li" data-school="UW-Madison" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Sharon Li</div>
+        <div class="advisor-meta">
+          <span class="tag">UW-Madison CS</span>
+          <span class="tag">Out-of-Distribution Detection / Trustworthy ML</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://pages.cs.wisc.edu/~sharonli/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>As an AP, allegedly cut funding and forced students to switch labs if no paper was produced within 6 months; many students quit or switched. After tenure, only 3 students had graduated, two of whom reportedly had falling-outs with her.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Allegedly withdrew RA offers after making them — leaving students without funding.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as "mean" by multiple people.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal</strong>
+        One person disputes the "falling out" claim, saying: "Not true — there was no falling out."
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Xiaobin Xiong" data-school="UW-Madison" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Xiaobin Xiong</div>
+        <div class="advisor-meta">
+          <span class="tag">UW-Madison / Now in Shanghai</span>
+          <span class="tag">Legged Robotics</span>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Returned to China (Shanghai Chuangzhi); lab direction branded as "Legged AI Lab" despite allegedly never working in AI.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Called CoRL a "low-quality conference" and prohibited students from submitting there.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Return to China left PhD students without a clear supervisor.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Research ideas described as "dreamlike" — technically weak, especially in learning-based methods.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Rate My Professor: consistently 1 star.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Wenxiao Pan" data-school="UW-Madison" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Wenxiao Pan</div>
+        <div class="advisor-meta">
+          <span class="tag">UW-Madison CS</span>
+          <span class="tag">ML / Systems</span>
+          <a class="profile-link" href="https://wenxiaopan.com" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly was collectively reported to the department by students in the lab.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAMU -->
+<div class="school-section" data-school="tamu">
+  <div class="school-header">🏛 Texas A&M University</div>
+
+  <div class="advisor-card" data-name="Yue Zhang" data-school="TAMU" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Yue Zhang (TAMU)</div>
+        <div class="advisor-meta">
+          <span class="tag">Texas A&M</span>
+          <span class="tag">ML / Systems</span>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Chinese professor but reportedly discriminates against Asian students while favoring white students; also accused of gender discrimination against women.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Multiple postdocs, PhDs, and even undergraduates have quit. Every student still in the lab reportedly has conflicts with him.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly exhibits NPD (Narcissistic Personality Disorder) traits — gaslighting students to the point where they need therapy; at least one student had more extreme reactions.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Weak research background — reportedly was pushed to graduate by his own PhD advisor. Current major papers rely on a postdoc collaborator.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Talks badly about and spreads rumors about other PIs to students.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Private life reportedly chaotic — even his friends are distressed by the situation.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GaTech -->
+<div class="school-section" data-school="gatech">
+  <div class="school-header">🏛 Georgia Tech</div>
+
+  <div class="advisor-card" data-name="Yingyan (Celine) Lin" data-school="GaTech" data-disputed="false" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Yingyan (Celine) Lin</div>
+        <div class="advisor-meta">
+          <span class="tag">Georgia Tech ECE</span>
+          <span class="tag">Efficient ML / Hardware-Software Co-Design</span>
+          <a class="profile-link" href="https://eiclab.scs.gatech.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly ghosts interview applicants.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>5+ PhD students quit or transferred in the past 2 years.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Good to early graduates; quality deteriorated for later cohorts.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as academically mediocre; early success reportedly due to guidance from a collaborator (Atlas Wang at TAMU) rather than her own direction.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Exhibits NPD-type behavior; lab members seek therapy.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly had students vote to expel a fellow student — described as eyebrow-raising behavior.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Publishes similar ideas recycled across 3–4 different papers.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal from a PhD student in the lab</strong>
+        "Prof. Lin funds students, helps revise papers, teaches presentation skills, and helps find internships/jobs. Don't let bad-faith actors mislead you."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UCMerced -->
+<div class="school-section" data-school="ucmerced">
+  <div class="school-header">🏛 UC Merced</div>
+
+  <div class="advisor-card" data-name="Yiwei Wang" data-school="UCMerced" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Yiwei Wang</div>
+        <div class="advisor-meta">
+          <span class="tag">UC Merced</span>
+          <span class="tag">NLP / Graph Neural Networks</span>
+          <span class="tag disputed-tag">⚠ Disputed (strongly)</span>
+          <a class="profile-link" href="https://wangywust.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Original criticism: too many interns; provides no real guidance; reportedly dismissive in interviews.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Graduation requirements listed as: 7 CCF-A first-author papers = 3-year graduation; 6 papers = 3.5 years; 5 papers = 4 years. All must be sole first-authored by the student with the professor as sole corresponding author.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Large volume of arXiv preprints (~90 listed, counter-claim: fewer than 90 actual) — code and benchmarks not open-sourced.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of writing negative recommendation letters for some students.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>"Couples shop" with collaborator Yujun Cai (University of Queensland, Australia).</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Very strong rebuttal from multiple students and collaborators</strong>
+        Numerous people — students, former interns, and collaborators — wrote strongly positive accounts. Highlights include: helps students with absolutely no prior publications get their first A-conference paper; personally edits figures, rewrites sentences, brainstorms paper titles; available via WeChat and responds promptly; gives ideas proactively; provides 8x A100 GPUs (self-funded); focuses on student wellbeing and development; fair authorship. His collaborator Yujun Cai is also described very positively: edits word by word, available late at night for emotional support, genuinely cares about students' futures. The rebuttal community consensus is very strongly in his favor.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CAS -->
+<div class="school-section" data-school="cas">
+  <div class="school-header">🏛 Chinese Academy of Sciences</div>
+
+  <div class="advisor-card" data-name="Dingwen Tao" data-school="CAS" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Dingwen Tao</div>
+        <div class="advisor-meta">
+          <span class="tag">CAS / Formerly Indiana University</span>
+          <span class="tag">HPC / Scientific Computing</span>
+          <a class="profile-link" href="https://luddy.indiana.edu/contact/profile/?profile_id=1037" target="_blank" onclick="event.stopPropagation()">🔗 Former IU Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Extremely demanding — students who don't produce enough are dismissed in under a year.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Jumped between 3 universities in the US over 6 years, then returned to China. When returning, gave very late notice to students and continued recruiting new students to IU even after deciding to leave.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as motivated purely by career advancement/power — all students are potential "expendables."</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Caltech -->
+<div class="school-section" data-school="caltech">
+  <div class="school-header">🏛 Caltech</div>
+
+  <div class="advisor-card" data-name="Anima Anandkumar" data-school="Caltech" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Anima Anandkumar</div>
+        <div class="advisor-meta">
+          <span class="tag">Caltech Computing + Mathematical Sciences</span>
+          <span class="tag">ML / Tensor Methods / Scientific ML</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="http://tensorlab.cms.caltech.edu/users/anima/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly requires prior collaboration before agreeing to advise PhD students.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reported to have been dismissed from NVIDIA following complaints from lab members; joined Caltech afterward.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Recruits dozens of interns with a "survival of the fittest" approach — anyone not performing well can be let go at any time.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly sometimes emotionally unstable.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Mixed assessment</strong>
+        She is described as extremely attentive to certain projects (NO-related work especially), resourceful with excellent industry connections (Nvidia, top-4 labs). Lab student outcomes are reportedly very good — tenure-track at top-10, top-tier industry jobs. However, she's confirmed to be a demanding advisor who pushes hard. One note: "You need a strong heart to work with her — but resources are real and ample."
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-card" data-name="Yang Song" data-school="Caltech" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Yang Song</div>
+        <div class="advisor-meta">
+          <span class="tag">Caltech (appointment deferred)</span>
+          <span class="tag">Generative Models / Diffusion</span>
+          <a class="profile-link" href="https://yang-song.net" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Accepted students before formally joining Caltech, then deferred his start date repeatedly — ultimately never joined (went full-time at OpenAI). Students were left to find other supervisors at Caltech, which has limited CS/AI faculty.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- University of Virginia -->
+<div class="school-section" data-school="uva">
+  <div class="school-header">🏛 University of Virginia</div>
+
+  <div class="advisor-card" data-name="Xiaoxuan Yang" data-school="UVA" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Xiaoxuan Yang</div>
+        <div class="advisor-meta">
+          <span class="tag">UVA</span>
+          <span class="tag">Efficient ML / Edge AI</span>
+          <a class="profile-link" href="https://xiaoxuanyang.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Appears to exhibit NPD-type personality; classic "gaslighting" behavior.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly has funding for only 1–2 students but accepted 3 — leaving someone without support.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Says "don't rush" publicly but pushes intensely in private — if there's no progress within a week, reportedly livid.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Encourages internal lab competition (gladiator pit).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Reportedly badmouths students to the department chair and her own former advisor.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Multiple meetings per week plus mandatory weekly report sheets (with illogical structure).</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Provides no useful research guidance — only chants "find a unique innovation point" without specifics.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Trained under Yiran Chen (see that entry for more context).</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GWU -->
+<div class="school-section" data-school="gwu">
+  <div class="school-header">🏛 George Washington University</div>
+
+  <div class="advisor-card" data-name="Howie Huang" data-school="GWU" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Howie Huang</div>
+        <div class="advisor-meta">
+          <span class="tag">GWU ECE</span>
+          <span class="tag">Graph Computing / Systems</span>
+          <a class="profile-link" href="https://www.seas.gwu.edu/howie-huang" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as a "gladiator specialist" — during his associate-to-full-professor years, reportedly recruited 5 students then dismissed 3. Within 3 months he would claim not to know a student's strengths, then require the student to work as an OPT employee. Described as "disgusting."</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NYU -->
+<div class="school-section" data-school="nyu">
+  <div class="school-header">🏛 NYU</div>
+
+  <div class="advisor-card" data-name="Sherry Yang" data-school="NYU" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Sherry Yang</div>
+        <div class="advisor-meta">
+          <span class="tag">NYU</span>
+          <span class="tag">Generative Models / RL</span>
+          <a class="profile-link" href="https://sherryy.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as maintaining a very large pool of interview candidates — and very arrogant during interviews.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lehigh -->
+<div class="school-section" data-school="lehigh">
+  <div class="school-header">🏛 Lehigh University</div>
+
+  <div class="advisor-card" data-name="Lichao Sun" data-school="Lehigh" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Lichao Sun</div>
+        <div class="advisor-meta">
+          <span class="tag">Lehigh University CS</span>
+          <span class="tag">ML / AI Safety / LLMs</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+          <a class="profile-link" href="https://lichao-sun.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Criticism of research quality: accused of producing large volumes of surveys and trendy papers (e.g., a "Sora" survey, "Mora," "Bora"); capable of completing a survey in 2 weeks. Accused of naming papers to ride hype cycles.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>One claim that a Nature-family paper's data was fabricated — disputed by others who say the code/checkpoints are fully open-sourced and reproducible.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Posts on Xiaohongshu about career advice (e.g., "you don't need a PhD") then reverses position days later.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of manipulating the review process — caught by senior researchers.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Accused of "gladiator" midnight meetings and pushing students to compete.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Strong rebuttal from students and interns</strong>
+        PhD students (5–6 in the lab) and many interns all report positive experiences: given freedom, resources, and connections. He is described as helping with internship placements, writing recommendation letters, and taking ~2-hour personal phone calls with students about their career development. Multiple collaborators vouch for his integrity. The research criticism (surveys, etc.) is acknowledged but countered as not being an ethical violation. A path to EB1A/NIW is mentioned as a practical benefit.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UMN -->
+<div class="school-section" data-school="umn">
+  <div class="school-header">🏛 University of Minnesota</div>
+  <div class="advisor-card" data-name="Katie Zhao" data-school="UMN" data-disputed="true" data-rebuttal="true">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Katie Zhao</div>
+        <div class="advisor-meta">
+          <span class="tag">UMN</span>
+          <span class="tag">Robotics / Autonomous Systems</span>
+          <span class="tag disputed-tag">⚠ Disputed</span>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div>Described as very demanding; one student reportedly quit.</div></div>
+      </div>
+      <div class="rebuttal-section">
+        <strong>Rebuttal</strong>
+        One person says Zhao is actually easygoing and doesn't impose hard deadlines; if a deadline is missed, you just aim for the next one. Only one quit is confirmed.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upitt -->
+<div class="school-section" data-school="upitt">
+  <div class="school-header">🏛 University of Pittsburgh</div>
+  <div class="advisor-card" data-name="Junyu Liu" data-school="UPitt" data-disputed="false" data-rebuttal="false">
+    <div class="advisor-header" onclick="toggle(this)">
+      <div>
+        <div class="advisor-name">Junyu Liu</div>
+        <div class="advisor-meta">
+          <span class="tag">UPitt</span>
+          <span class="tag">CS / HCI</span>
+        </div>
+      </div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="advisor-body">
+      <div class="flags-list">
+        <div class="flag-item"><div class="flag-dot"></div><div><strong>Warning to women specifically:</strong> Accused of widespread sexual harassment of women in academia (and outside) — reportedly repeatedly invites women to share his hotel room at conferences, and continues after rejection.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Uses a friendly public persona to get close to people, then begins making sexual advances once familiar.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div>Has reportedly made sexist statements privately, such as "Female PhD students all end up as prostitutes."</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="no-results" class="no-results" style="display:none;">No advisors match your search or filter.</div>
+
+</main>
+
+<script>
+let activeFilter = 'all';
+
+function toggle(header) {
+  const icon = header.querySelector('.toggle-icon');
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  icon.textContent = isOpen ? '+' : '−';
+}
+
+function doSearch() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  applyFilters(q, activeFilter);
+}
+
+function filterAll(el) { setFilter('all', el); }
+function filterDisputed(el) { setFilter('disputed', el); }
+function filterHasRebuttal(el) { setFilter('rebuttal', el); }
+function filterHasProfile(el) { setFilter('profile', el); }
+
+function setFilter(type, el) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = type;
+  applyFilters(document.getElementById('search').value.toLowerCase(), type);
+}
+
+function applyFilters(q, filterType) {
+  const cards = document.querySelectorAll('.advisor-card');
+  let shown = 0;
+  cards.forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    const school = (card.dataset.school || '').toLowerCase();
+    const text = card.textContent.toLowerCase();
+    const matchesSearch = !q || name.includes(q) || school.includes(q) || text.includes(q);
+    let matchesFilter = true;
+    if (filterType === 'disputed') matchesFilter = card.dataset.disputed === 'true';
+    if (filterType === 'rebuttal') matchesFilter = card.dataset.rebuttal === 'true';
+    if (filterType === 'profile') matchesFilter = !!card.querySelector('.profile-link');
+    const show = matchesSearch && matchesFilter;
+    card.classList.toggle('hide', !show);
+    if (show) shown++;
+  });
+  document.getElementById('stat-shown').textContent = shown + ' showing';
+  document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none';
+
+  // hide empty school sections
+  document.querySelectorAll('.school-section').forEach(section => {
+    const visible = [...section.querySelectorAll('.advisor-card')].some(c => !c.classList.contains('hide'));
+    section.style.display = visible ? '' : 'none';
+  });
+}
+
+// init counts
+window.addEventListener('DOMContentLoaded', () => {
+  const total = document.querySelectorAll('.advisor-card').length;
+  document.getElementById('stat-count').textContent = total + ' advisors listed';
+  document.getElementById('stat-shown').textContent = total + ' showing';
+});
+</script>
+</body>
+</html>
