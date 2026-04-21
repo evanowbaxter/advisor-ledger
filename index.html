@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3E7G1P1B50"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3E7G1P1B50');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Advisor Red Flags Ledger — English Translation</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -176,6 +184,37 @@
   }
   .tag.disputed-tag { background: var(--disputed); color: #b7770d; border-color: #f0c060; }
   .tag.profile-tag { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+  .alert-tag {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .alert-tag.sexual-harassment { background: #fce4ec; color: #880e4f; border-color: #f48fb1; }
+  .alert-tag.mental-health { background: #f3e5f5; color: #4a148c; border-color: #ce93d8; }
+  .alert-tag.student-dismissal { background: #fff3e0; color: #bf360c; border-color: #ffb74d; }
+  .alert-tag.academic-misconduct { background: #fbe9e7; color: #b71c1c; border-color: #ef9a9a; }
+  .alert-tag.discrimination { background: #fce4ec; color: #6a1b4d; border-color: #f48fb1; }
+  .alert-tag.exploitation { background: #fff8e1; color: #7c4a00; border-color: #ffe082; }
+  .alert-tag.no-guidance { background: #e8eaf6; color: #283593; border-color: #9fa8da; }
+  .alert-tag.graduation-blocked { background: #ffebee; color: #c62828; border-color: #ef9a9a; }
+  .alert-tag.threats { background: #ffebee; color: #b71c1c; border-color: #ef9a9a; }
+  .alert-tag.coercion { background: #fce4ec; color: #880e4f; border-color: #f48fb1; }
+  .alert-tag.data-fabrication { background: #ffebee; color: #b71c1c; border-color: #ef9a9a; }
+  .summary-box {
+    background: #f9f7f4;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.7rem 1rem;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+    margin: 0.75rem 0 0.25rem;
+    font-style: italic;
+  }
   .profile-link {
     font-size: 12px;
     font-family: 'IBM Plex Mono', monospace;
@@ -274,6 +313,12 @@
   <span class="chip" onclick="filterDisputed(this)">⚠ Disputed</span>
   <span class="chip" onclick="filterHasRebuttal(this)">✓ Has Rebuttal</span>
   <span class="chip" onclick="filterHasProfile(this)">🔗 Has Profile Link</span>
+  <span class="chip" onclick="filterByAlert('sexual-harassment', this)">🚨 Sexual Harassment</span>
+  <span class="chip" onclick="filterByAlert('mental-health', this)">🧠 Mental Health Impact</span>
+  <span class="chip" onclick="filterByAlert('threats', this)">⚠ Threats / Coercion</span>
+  <span class="chip" onclick="filterByAlert('discrimination', this)">🚫 Discrimination</span>
+  <span class="chip" onclick="filterByAlert('student-dismissal', this)">🚪 Mass Student Dismissals</span>
+  <span class="chip" onclick="filterByAlert('academic-misconduct', this)">📄 Academic Misconduct</span>
 </div>
 
 <div class="stats-bar">
@@ -298,15 +343,18 @@
 <div class="school-section" data-school="stanford">
   <div class="school-header">🏛 Stanford University</div>
 
-  <div class="advisor-card" data-name="Stanley Lei Qi" data-school="Stanford" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Stanley Lei Qi" data-school="Stanford" data-disputed="false" data-rebuttal="false" data-alerts="sexual-harassment mental-health">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Stanley Lei Qi</div>
         <div class="advisor-meta">
           <span class="tag">Stanford</span>
           <span class="tag">Biology / CRISPR</span>
-          <a class="profile-link" href="https://qi.stanford.edu" target="_blank" onclick="event.stopPropagation()">🔗 Lab website</a>
+          <a class="profile-link" href="https://profiles.stanford.edu/stanleyqi" target="_blank" onclick="event.stopPropagation()">🔗 Lab website</a>
+          <span class="alert-tag sexual-harassment">🚨 Sexual Harassment</span>
+          <span class="alert-tag mental-health">🧠 Mental Health Impact</span>
         </div>
+        <div class="summary-box">Students and postdocs reportedly suffer systematic psychological pressure and depression. Accused of sexual harassment of female students at events, favoritism toward connected families, and blocking graduation for underperformers.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -318,7 +366,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Jiajun Wu" data-school="Stanford" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Jiajun Wu" data-school="Stanford" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Jiajun Wu</div>
@@ -328,6 +376,7 @@
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://jiajunwu.com" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Isolated reports of students struggling or receiving negative references; strongly rebutted by many others who had excellent experiences. High competition among interns may affect outcomes relative to expectations.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -342,7 +391,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Shuran Song" data-school="Stanford" data-disputed="true" data-rebuttal="false">
+  <div class="advisor-card" data-name="Shuran Song" data-school="Stanford" data-disputed="true" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Shuran Song</div>
@@ -352,6 +401,7 @@
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://shurans.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Vague references to a past controversy; some say behavior changed significantly after tenure. Current student experience appears positive. Limited concrete details available.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -367,7 +417,7 @@
 <div class="school-section" data-school="cmu">
   <div class="school-header">🏛 Carnegie Mellon University (CMU)</div>
 
-  <div class="advisor-card" data-name="Min Xu" data-school="CMU" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Min Xu" data-school="CMU" data-disputed="false" data-rebuttal="false" data-alerts="no-guidance exploitation">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Min Xu</div>
@@ -375,7 +425,10 @@
           <span class="tag">CMU</span>
           <span class="tag">Computational Biology / Cryo-ET</span>
           <a class="profile-link" href="https://xulabs.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Lab</a>
+          <span class="alert-tag no-guidance">🔵 No Guidance</span>
+          <span class="alert-tag exploitation">💼 Exploitation</span>
         </div>
+        <div class="summary-box">Runs an enormous "fishing pond" of 1,000+ interns with virtually no individual guidance. Low-quality postdocs do all supervision. Lab severely underfunded (100+ people, one GPU). Rarely converts to PhD offers despite promises; known for years of PhD students quitting.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -389,15 +442,19 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Justin Chan" data-school="CMU" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Justin Chan" data-school="CMU" data-disputed="false" data-rebuttal="false" data-alerts="student-dismissal discrimination exploitation">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Justin Chan</div>
         <div class="advisor-meta">
           <span class="tag">CMU</span>
           <span class="tag">Systems / Networking</span>
-          <a class="profile-link" href="https://justinchan.org" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <a class="profile-link" href="https://www.cs.cmu.edu/~justinc3/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag student-dismissal">🚪 Mass Dismissals</span>
+          <span class="alert-tag discrimination">🚫 Gender Discrimination</span>
+          <span class="alert-tag exploitation">💼 Credit Theft</span>
         </div>
+        <div class="summary-box">Dismissed 2 of 3 PhD students within his first year. Made sexist remarks about female researchers. Allegedly stole a visiting PhD student's 6 months of work and gave credit to his own student.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -415,7 +472,7 @@
 <div class="school-section" data-school="rice">
   <div class="school-header">🏛 Rice University</div>
 
-  <div class="advisor-card" data-name="Tong (Tony) Geng" data-school="Rice" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Tong (Tony) Geng" data-school="Rice" data-disputed="true" data-rebuttal="true" data-alerts="threats coercion mental-health student-dismissal">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Tong (Tony) Geng</div>
@@ -423,8 +480,12 @@
           <span class="tag">Rice University</span>
           <span class="tag">ECE / Computer Architecture</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
-          <a class="profile-link" href="https://tonygeng.net" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <a class="profile-link" href="https://profiles.rice.edu/faculty/tony-geng" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag threats">⚠ Threats</span>
+          <span class="alert-tag mental-health">🧠 Mental Health Impact</span>
+          <span class="alert-tag student-dismissal">🚪 Mass Dismissals</span>
         </div>
+        <div class="summary-box">All 3 first-year students at Rochester quit; more followed at Rice. Accused of threatening to block degrees, requiring secret NDAs, late-night calls, and sabotaging students who tried to switch to other advisors. More recent accounts suggest improvement.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -450,14 +511,18 @@
 <div class="school-section" data-school="ucr">
   <div class="school-header">🏛 UC Riverside</div>
 
-  <div class="advisor-card" data-name="Zheng Sika" data-school="UCR" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Zheng Sika" data-school="UCR" data-disputed="false" data-rebuttal="false" data-alerts="threats graduation-blocked coercion">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Zheng Sika</div>
         <div class="advisor-meta">
           <span class="tag">UCR — School of Medicine</span>
           <span class="tag">Biomedical Research</span>
+          <span class="alert-tag graduation-blocked">🎓 Graduation Blocked</span>
+          <span class="alert-tag threats">⚠ Threats</span>
+          <span class="alert-tag coercion">🔒 Coercion</span>
         </div>
+        <div class="summary-box">Systematic pattern of blocking student progress: gives failing grades to students who try to switch advisors, drags projects for years, disappears for months then demands full redos, and failed a student in their final month before graduation. Requires daily and weekly reports with 24-hour turnaround.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -481,7 +546,7 @@
 <div class="school-section" data-school="northwestern">
   <div class="school-header">🏛 Northwestern University</div>
 
-  <div class="advisor-card" data-name="Kaize Ding" data-school="Northwestern" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Kaize Ding" data-school="Northwestern" data-disputed="true" data-rebuttal="true" data-alerts="sexual-harassment">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Kaize Ding</div>
@@ -490,7 +555,9 @@
           <span class="tag">Data Mining / Graph Neural Networks</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://kaize0409.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag sexual-harassment">🚨 Sexual Harassment (alleged, disputed)</span>
         </div>
+        <div class="summary-box">Disputed allegations of an inappropriate relationship with a female student; the student who filed a complaint was later dismissed reportedly for academic misconduct. Many interns and collaborators report strongly positive experiences — helpful, fair, responsive.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -511,15 +578,19 @@
 <div class="school-section" data-school="iub">
   <div class="school-header">🏛 Indiana University Bloomington</div>
 
-  <div class="advisor-card" data-name="Fengguang Song" data-school="IUB" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Fengguang Song" data-school="IUB" data-disputed="false" data-rebuttal="false" data-alerts="no-guidance exploitation graduation-blocked">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Fengguang Song</div>
         <div class="advisor-meta">
           <span class="tag">Indiana University Bloomington</span>
           <span class="tag">HPC / Systems</span>
-          <a class="profile-link" href="https://cs.iupui.edu/~fgsong/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <a class="profile-link" href="https://homes.luddy.indiana.edu/fgsong/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag no-guidance">🔵 No Real Guidance</span>
+          <span class="alert-tag exploitation">💼 Administrative Exploitation</span>
+          <span class="alert-tag graduation-blocked">🎓 Graduation Blocked</span>
         </div>
+        <div class="summary-box">Uses ChatGPT to respond to students and forces research based on outdated AI-found papers. Weaponizes administrative tools: blocks credits, withholds scholarships, refuses internship paperwork, then suddenly demands students quit. Five students left within 2 years of him taking over the lab.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -541,7 +612,7 @@
 <div class="school-section" data-school="mit">
   <div class="school-header">🏛 MIT</div>
 
-  <div class="advisor-card" data-name="Wojciech Matusik" data-school="MIT" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Wojciech Matusik" data-school="MIT" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Wojciech Matusik</div>
@@ -551,6 +622,7 @@
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://cdfg.mit.edu/wojciech" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Mild criticism about one prolific lab member publishing many papers — largely rebutted by lab members who report a positive, well-funded environment. The specific authorship concern was clarified and accepted by the person involved.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -565,7 +637,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Manya Ghobadi" data-school="MIT" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Manya Ghobadi" data-school="MIT" data-disputed="false" data-rebuttal="false" data-alerts="exploitation academic-misconduct discrimination">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Manya Ghobadi</div>
@@ -573,7 +645,11 @@
           <span class="tag">MIT CSAIL</span>
           <span class="tag">Networking / Optical Networks</span>
           <a class="profile-link" href="https://people.csail.mit.edu/ghobadi/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag academic-misconduct">📄 Data Fabrication (alleged)</span>
+          <span class="alert-tag exploitation">💼 Unfair Authorship</span>
+          <span class="alert-tag discrimination">🚫 Nationality Bias</span>
         </div>
+        <div class="summary-box">Accused of fabricating data, having limited domain knowledge, and maintaining her position through her partner (Adam Chlipala, MIT). Gives undergraduates first authorship over grad students; dismissed a Chinese postdoc with visa complications. Severely underfunded, using a startup to cover expenses.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -596,7 +672,7 @@
 <!-- NJIT -->
 <div class="school-section" data-school="njit">
   <div class="school-header">🏛 NJIT</div>
-  <div class="advisor-card" data-name="Hai Phan" data-school="NJIT" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Hai Phan" data-school="NJIT" data-disputed="false" data-rebuttal="false" data-alerts="discrimination">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Hai Phan</div>
@@ -604,7 +680,9 @@
           <span class="tag">NJIT</span>
           <span class="tag">Machine Learning / Privacy</span>
           <a class="profile-link" href="https://haiphannjit.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag discrimination">🚫 Racial Discrimination</span>
         </div>
+        <div class="summary-box">Accused of mocking a candidate's accent during an interview and dismissing their research arrogantly. Single account — limited information available.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -620,7 +698,7 @@
 <div class="school-section" data-school="ucsd">
   <div class="school-header">🏛 UC San Diego</div>
 
-  <div class="advisor-card" data-name="Zhiting Hu" data-school="UCSD" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Zhiting Hu" data-school="UCSD" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Zhiting Hu</div>
@@ -630,6 +708,7 @@
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://zhitinghu.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Went to xAI mid-advising. Accused of being part of a 'couples shop' and weak academically — all strongly rebutted. Lab is described as extremely well-resourced with fast PhD completions and excellent student outcomes.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -646,7 +725,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Lianhui Qin" data-school="UCSD" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Lianhui Qin" data-school="UCSD" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Lianhui Qin</div>
@@ -656,6 +735,7 @@
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://lianhui.ucsd.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Minor criticism: tends to ghost meetings. Widely regarded as a good advisor overall. Sharing PhD students with her partner Zhiting Hu is noted but not considered a serious problem.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -666,7 +746,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Nuno Vasconcelos" data-school="UCSD" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Nuno Vasconcelos" data-school="UCSD" data-disputed="false" data-rebuttal="false" data-alerts="graduation-blocked exploitation">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Nuno Vasconcelos</div>
@@ -674,7 +754,10 @@
           <span class="tag">UCSD ECE</span>
           <span class="tag">Computer Vision</span>
           <a class="profile-link" href="http://www.svcl.ucsd.edu/~nuno/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag graduation-blocked">🎓 Graduation Blocked</span>
+          <span class="alert-tag exploitation">💼 Gladiator Pit</span>
         </div>
+        <div class="summary-box">Average time-to-degree is reportedly 7 years; requires 7+ top-conference first-author papers before allowing a defense. Poor industry relationships isolate students. Pits two new PhD students against each other for the single funding slot.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -689,7 +772,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Xinyu Zhang" data-school="UCSD" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Xinyu Zhang" data-school="UCSD" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Xinyu Zhang</div>
@@ -697,8 +780,9 @@
           <span class="tag">UCSD ECE</span>
           <span class="tag">Wireless / Mobile Systems</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
-          <a class="profile-link" href="https://xinyu.ece.ucsd.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <a class="profile-link" href="https://xyzhang.ucsd.edu/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Known workaholic who may neglect personal health and family — not directly harmful to students. One former student praises him as a strong mentor who provides excellent research training.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -717,7 +801,7 @@
 <!-- UTD -->
 <div class="school-section" data-school="utd">
   <div class="school-header">🏛 UT Dallas</div>
-  <div class="advisor-card" data-name="Xinya Du" data-school="UTD" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Xinya Du" data-school="UTD" data-disputed="false" data-rebuttal="false" data-alerts="student-dismissal">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Xinya Du</div>
@@ -725,7 +809,9 @@
           <span class="tag">UT Dallas</span>
           <span class="tag">NLP</span>
           <a class="profile-link" href="https://xinyadu.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag student-dismissal">🚪 Multiple Students Quit</span>
         </div>
+        <div class="summary-box">Repeatedly late to meetings without notice; unfocused during meetings; forces sick students to work. Multiple students have quit. Communication reported as consistently unclear. Attempted multiple times to move institutions without success.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -744,15 +830,20 @@
 <!-- UCSC -->
 <div class="school-section" data-school="ucsc">
   <div class="school-header">🏛 UC Santa Cruz</div>
-  <div class="advisor-card" data-name="Chenguang Wang" data-school="UCSC" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Chenguang Wang" data-school="UCSC" data-disputed="false" data-rebuttal="false" data-alerts="threats coercion student-dismissal graduation-blocked">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Chenguang Wang</div>
         <div class="advisor-meta">
           <span class="tag">UCSC</span>
           <span class="tag">NLP</span>
-          <a class="profile-link" href="https://wangchenguang.com" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <a class="profile-link" href="https://cgraywang.github.io/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag threats">⚠ Threats</span>
+          <span class="alert-tag coercion">🔒 Coercion</span>
+          <span class="alert-tag student-dismissal">🚪 Students Quit</span>
+          <span class="alert-tag graduation-blocked">🎓 Graduation Blocked</span>
         </div>
+        <div class="summary-box">All first-year PhD students quit; he then allegedly spread rumors about them. Forced students to cancel rotations in his presence and email other advisors with him BCCed. Sent legal threats to someone who posted a public warning. Cancels submissions hours before deadlines, bans internal collaboration, forced a Master's student to graduate late. Opened Zoom to yell at students who left after 3am.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -774,7 +865,7 @@
 <!-- UChicago -->
 <div class="school-section" data-school="uchicago">
   <div class="school-header">🏛 University of Chicago</div>
-  <div class="advisor-card" data-name="Junchen Jiang" data-school="UChicago" data-disputed="true" data-rebuttal="false">
+  <div class="advisor-card" data-name="Junchen Jiang" data-school="UChicago" data-disputed="true" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Junchen Jiang</div>
@@ -783,6 +874,7 @@
           <span class="tag">Networking / Systems</span>
           <a class="profile-link" href="https://people.cs.uchicago.edu/~junchenj/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Only vague concern raised about lab atmosphere — no specific details provided. Treat with low confidence.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -798,7 +890,7 @@
 <div class="school-section" data-school="princeton">
   <div class="school-header">🏛 Princeton University</div>
 
-  <div class="advisor-card" data-name="Felix Heide" data-school="Princeton" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Felix Heide" data-school="Princeton" data-disputed="false" data-rebuttal="false" data-alerts="threats graduation-blocked student-dismissal coercion">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Felix Heide</div>
@@ -806,7 +898,11 @@
           <span class="tag">Princeton CS</span>
           <span class="tag">Computational Imaging / Optics</span>
           <a class="profile-link" href="https://www.cs.princeton.edu/~fheide/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag threats">⚠ Threats</span>
+          <span class="alert-tag graduation-blocked">🎓 Graduation Blocked</span>
+          <span class="alert-tag student-dismissal">🚪 Mass Dismissals</span>
         </div>
+        <div class="summary-box">Described as Princeton CS's most toxic professor — threatens to block graduation, internships, qualifying exams, and funding. Reported to the department dozens of times with no change. All early PhD students reportedly left. Poor reputation within Stanford and the broader field.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -821,7 +917,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Mengdi Wang" data-school="Princeton" data-disputed="false" data-rebuttal="true">
+  <div class="advisor-card" data-name="Mengdi Wang" data-school="Princeton" data-disputed="false" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Mengdi Wang</div>
@@ -829,7 +925,10 @@
           <span class="tag">Princeton ORFE</span>
           <span class="tag">Reinforcement Learning / Optimization</span>
           <a class="profile-link" href="https://mwang.princeton.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag exploitation">💼 Authorship Disputes (postdoc)</span>
         </div>
+        <div class="summary-box">Recruits many interns; a postdoc in her group has a reputation for authorship disputes. Allegedly doesn't fund everyone after over-recruiting. Collaborators say she is personally kind and busy.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -846,7 +945,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Zhuang Liu" data-school="Princeton" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Zhuang Liu" data-school="Princeton" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Zhuang Liu</div>
@@ -854,7 +953,10 @@
           <span class="tag">Princeton CS</span>
           <span class="tag">Computer Vision / Deep Learning</span>
           <a class="profile-link" href="https://liuzhuang13.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag academic-misconduct">📄 Authorship Manipulation (alleged)</span><span class="alert-tag student-dismissal">🚪 Students Quit</span>
         </div>
+        <div class="summary-box">A student reportedly quit or switched in his first AP year. Described as treating interns poorly with no return offers. Suspected of manipulating author order on papers.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -872,7 +974,7 @@
 <div class="school-section" data-school="upenn">
   <div class="school-header">🏛 University of Pennsylvania</div>
 
-  <div class="advisor-card" data-name="Lingjie Liu" data-school="UPenn" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Lingjie Liu" data-school="UPenn" data-disputed="true" data-rebuttal="true" data-alerts="student-dismissal threats">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Lingjie Liu</div>
@@ -881,7 +983,10 @@
           <span class="tag">3D Vision / Computer Graphics</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://lingjie0206.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag student-dismissal">🚪 Students Dismissed</span>
+          <span class="alert-tag threats">⚠ Threats (alleged, disputed)</span>
         </div>
+        <div class="summary-box">Accusations of poor skills, controlling behavior, and verbal attacks on students in meetings — all heavily disputed. Multiple collaborators and interns report very positive experiences. MPI dismissal story specifically denied by a witness. Married to Jiatao Gu (UPenn), who is widely praised.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -900,7 +1005,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Jiatao Gu" data-school="UPenn" data-disputed="false" data-rebuttal="true">
+  <div class="advisor-card" data-name="Jiatao Gu" data-school="UPenn" data-disputed="false" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Jiatao Gu</div>
@@ -910,6 +1015,7 @@
           <span class="tag">✓ Positive mentions</span>
           <a class="profile-link" href="https://jiataogu.me" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Uniformly positive mentions — full of research insight, hard-working but not coercive. Apple background. Married to Lingjie Liu (UPenn). Widely recommended as an excellent advisor.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -926,7 +1032,7 @@
 <div class="school-section" data-school="columbia">
   <div class="school-header">🏛 Columbia University</div>
 
-  <div class="advisor-card" data-name="Sharon Di" data-school="Columbia" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Sharon Di" data-school="Columbia" data-disputed="false" data-rebuttal="false" data-alerts="exploitation">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Sharon Di</div>
@@ -934,7 +1040,9 @@
           <span class="tag">Columbia</span>
           <span class="tag">Civil Engineering / Transportation AI</span>
           <a class="profile-link" href="https://sharondi-columbia.wixsite.com/ditectlab" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag exploitation">💼 Gladiator Pit</span>
         </div>
+        <div class="summary-box">Recruits dozens of MS students in a school-wide competition — only the best performer gets a PhD spot. Extremely demanding with regular weekend and holiday meetings as the norm.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -946,7 +1054,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Xiaodong Wang" data-school="Columbia" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Xiaodong Wang" data-school="Columbia" data-disputed="false" data-rebuttal="false" data-alerts="mental-health exploitation">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Xiaodong Wang</div>
@@ -954,7 +1062,10 @@
           <span class="tag">Columbia EE</span>
           <span class="tag">Communications / Signal Processing</span>
           <a class="profile-link" href="http://www.ee.columbia.edu/~wangx/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag mental-health">🧠 Mental Health Impact</span>
+          <span class="alert-tag exploitation">💼 External Project Exploitation</span>
         </div>
+        <div class="summary-box">A student reportedly developed depression in the lab. Accused of running paid external projects and directing student labor toward them.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -966,14 +1077,19 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Baron Law" data-school="Columbia" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Baron Law" data-school="Columbia" data-disputed="false" data-rebuttal="false" data-alerts="mental-health exploitation discrimination no-guidance">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Baron Law</div>
         <div class="advisor-meta">
           <span class="tag">Columbia</span>
           <span class="tag">Adjunct / AI</span>
+          <span class="alert-tag mental-health">🧠 Mental Health Impact</span>
+          <span class="alert-tag exploitation">💼 Labour Exploitation</span>
+          <span class="alert-tag discrimination">🚫 Regional Discrimination</span>
+          <span class="alert-tag no-guidance">🔵 No Research Guidance</span>
         </div>
+        <div class="summary-box">Adjunct who funnels students into his company with no computing resources or research direction. Students developed depression; he then micromanaged and monitored attendance. Openly made discriminatory remarks against mainland Chinese students. Eventually assigned students to tasks completely unrelated to research.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -992,7 +1108,7 @@
 <div class="school-section" data-school="ucb">
   <div class="school-header">🏛 UC Berkeley</div>
 
-  <div class="advisor-card" data-name="Sergey Levine" data-school="UCB" data-disputed="true" data-rebuttal="false">
+  <div class="advisor-card" data-name="Sergey Levine" data-school="UCB" data-disputed="true" data-rebuttal="false" data-alerts="exploitation academic-misconduct">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Sergey Levine</div>
@@ -1001,7 +1117,10 @@
           <span class="tag">Reinforcement Learning / Robotics</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://people.eecs.berkeley.edu/~svlevine/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag exploitation">💼 Intern Exploitation (alleged)</span>
+          <span class="alert-tag academic-misconduct">📄 Reproducibility Issues</span>
         </div>
+        <div class="summary-box">A Reddit post about lab abuse at BAIR was linked, though the bad actor was reportedly a postdoc, not Levine directly. Accused of forcing students into unwanted research directions and running intern competitions where only the winner gets strong support. Over 90% of papers reportedly cannot be reproduced.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1020,7 +1139,7 @@
 <div class="school-section" data-school="jhu">
   <div class="school-header">🏛 Johns Hopkins University</div>
 
-  <div class="advisor-card" data-name="Mathias Unberath" data-school="JHU" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Mathias Unberath" data-school="JHU" data-disputed="false" data-rebuttal="false" data-alerts="exploitation no-guidance">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Mathias Unberath</div>
@@ -1028,7 +1147,10 @@
           <span class="tag">JHU</span>
           <span class="tag">Medical AI / Computer Vision</span>
           <a class="profile-link" href="https://www.cs.jhu.edu/~unberath/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag exploitation">💼 Intern Exploitation</span>
+          <span class="alert-tag no-guidance">🔵 No Guidance</span>
         </div>
+        <div class="summary-box">Recruits many interns, doesn't know their names, promises first-authorship then redirects it to junior PhD students. Refuses or provides negative recommendation letters for interns. Essentially uses interns as free labour to produce results for his PhD students, who are treated better.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1042,7 +1164,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Jason Eisner" data-school="JHU" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Jason Eisner" data-school="JHU" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Jason Eisner</div>
@@ -1052,6 +1174,7 @@
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://www.cs.jhu.edu/~jason/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Exceptionally strict academic standards — described as an outstanding advisor only suitable for extremely capable and resilient students. Not harmful, just intensely demanding.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1067,7 +1190,7 @@
 <div class="school-section" data-school="uiuc">
   <div class="school-header">🏛 University of Illinois Urbana-Champaign</div>
 
-  <div class="advisor-card" data-name="Jimeng Sun" data-school="UIUC" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Jimeng Sun" data-school="UIUC" data-disputed="false" data-rebuttal="false" data-alerts="student-dismissal discrimination mental-health">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Jimeng Sun</div>
@@ -1075,7 +1198,11 @@
           <span class="tag">UIUC CS</span>
           <span class="tag">AI for Healthcare</span>
           <a class="profile-link" href="https://www.sunlab.org" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag student-dismissal">🚪 Mass Dismissals</span>
+          <span class="alert-tag discrimination">🚫 Racial & Gender Discrimination</span>
+          <span class="alert-tag mental-health">🧠 Student Death (alleged)</span>
         </div>
+        <div class="summary-box">Accused of dismissing all students when moving institutions without notice, and of pressuring a student who later died to submit a paper right up to their death. Allegedly discriminates against women and Chinese students while favouring white students. Abandoned family for a partner and reportedly directs students toward her company.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1095,7 +1222,7 @@
 <div class="school-section" data-school="uwmadison">
   <div class="school-header">🏛 UW-Madison</div>
 
-  <div class="advisor-card" data-name="Sikai Chen" data-school="UW-Madison" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Sikai Chen" data-school="UW-Madison" data-disputed="false" data-rebuttal="false" data-alerts="exploitation coercion academic-misconduct">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Sikai Chen</div>
@@ -1103,7 +1230,11 @@
           <span class="tag">UW-Madison</span>
           <span class="tag">Transportation AI / Autonomous Systems</span>
           <a class="profile-link" href="https://sikai-chen.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag exploitation">💼 Labour & Financial Exploitation</span>
+          <span class="alert-tag coercion">🔒 Coercion</span>
+          <span class="alert-tag academic-misconduct">📄 Fabrication (as student, alleged)</span>
         </div>
+        <div class="summary-box">Extreme personal exploitation: forced students to drive him to the airport at night, do dishes at his home, and pay his rent when he was a postdoc. Bought his wife a computer instead of his student's; expensed his wife's meals but not student meetings. Accused of fabricating papers as a student, stealing authorship, and requiring all emails to be CCed to him. Technically described as clueless.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1121,7 +1252,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Sharon Li" data-school="UW-Madison" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Sharon Li" data-school="UW-Madison" data-disputed="true" data-rebuttal="true" data-alerts="student-dismissal exploitation">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Sharon Li</div>
@@ -1130,7 +1261,9 @@
           <span class="tag">Out-of-Distribution Detection / Trustworthy ML</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://pages.cs.wisc.edu/~sharonli/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <span class="alert-tag student-dismissal">🚪 Students Pushed Out</span>
         </div>
+        <div class="summary-box">As an AP, reportedly cut funding to students without papers within 6 months. After tenure, only 3 graduates, two reportedly estranged from her. Allegedly withdrew RA offers after making them. Described as "mean" by multiple people, though at least one dismissal claim is directly disputed.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1147,14 +1280,17 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Xiaobin Xiong" data-school="UW-Madison" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Xiaobin Xiong" data-school="UW-Madison" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Xiaobin Xiong</div>
         <div class="advisor-meta">
           <span class="tag">UW-Madison / Now in Shanghai</span>
           <span class="tag">Legged Robotics</span>
+        
+          <span class="alert-tag student-dismissal">🚪 Students Left in Limbo</span>
         </div>
+        <div class="summary-box">Left for China mid-way, leaving PhD students in limbo. Banned students from submitting to CoRL. Research direction described as disconnected from AI despite 'AI lab' branding. Consistently rated 1-star on Rate My Professor.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1169,15 +1305,18 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Wenxiao Pan" data-school="UW-Madison" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Wenxiao Pan" data-school="UW-Madison" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Wenxiao Pan</div>
         <div class="advisor-meta">
           <span class="tag">UW-Madison CS</span>
           <span class="tag">ML / Systems</span>
-          <a class="profile-link" href="https://wenxiaopan.com" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+          <a class="profile-link" href="https://directory.engr.wisc.edu/me/Faculty/Pan_Wenxiao/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag threats">⚠ Department Complaint Filed</span>
         </div>
+        <div class="summary-box">Collectively reported to the department by lab students. Very limited public information available.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1193,14 +1332,18 @@
 <div class="school-section" data-school="tamu">
   <div class="school-header">🏛 Texas A&M University</div>
 
-  <div class="advisor-card" data-name="Yue Zhang" data-school="TAMU" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Yue Zhang" data-school="TAMU" data-disputed="false" data-rebuttal="false" data-alerts="discrimination mental-health student-dismissal">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Yue Zhang (TAMU)</div>
         <div class="advisor-meta">
           <span class="tag">Texas A&M</span>
           <span class="tag">ML / Systems</span>
+          <span class="alert-tag discrimination">🚫 Racial & Gender Discrimination</span>
+          <span class="alert-tag mental-health">🧠 Mental Health Impact</span>
+          <span class="alert-tag student-dismissal">🚪 Multiple Students Left</span>
         </div>
+        <div class="summary-box">Accused of discriminating against Asian and female students while favouring white students. Every student in the lab reportedly has conflicts with him; some have needed therapy or had extreme reactions. Described as academically weak, relying on a postdoc collaborator for major results. Spreads rumours about other PIs to students.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1221,7 +1364,7 @@
 <div class="school-section" data-school="gatech">
   <div class="school-header">🏛 Georgia Tech</div>
 
-  <div class="advisor-card" data-name="Yingyan (Celine) Lin" data-school="GaTech" data-disputed="false" data-rebuttal="true">
+  <div class="advisor-card" data-name="Yingyan (Celine) Lin" data-school="GaTech" data-disputed="false" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Yingyan (Celine) Lin</div>
@@ -1229,7 +1372,10 @@
           <span class="tag">Georgia Tech ECE</span>
           <span class="tag">Efficient ML / Hardware-Software Co-Design</span>
           <a class="profile-link" href="https://eiclab.scs.gatech.edu" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag student-dismissal">🚪 Mass Student Exits</span><span class="alert-tag mental-health">🧠 Mental Health Impact</span>
         </div>
+        <div class="summary-box">Five or more PhD students quit or transferred in two years. Accused of NPD-type behaviour, internal student voting to expel peers, and recycling a few ideas across many papers. One student defends her funding and mentorship support.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1255,7 +1401,7 @@
 <div class="school-section" data-school="ucmerced">
   <div class="school-header">🏛 UC Merced</div>
 
-  <div class="advisor-card" data-name="Yiwei Wang" data-school="UCMerced" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Yiwei Wang" data-school="UCMerced" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Yiwei Wang</div>
@@ -1265,6 +1411,7 @@
           <span class="tag disputed-tag">⚠ Disputed (strongly)</span>
           <a class="profile-link" href="https://wangywust.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Very strongly disputed. Dozens of current and former students and collaborators wrote lengthy rebuttals praising hands-on guidance, self-funded GPUs, late-night emotional support, and fair authorship. Original complaints appear isolated and are directly contradicted by a large body of positive accounts.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1288,7 +1435,7 @@
 <div class="school-section" data-school="cas">
   <div class="school-header">🏛 Chinese Academy of Sciences</div>
 
-  <div class="advisor-card" data-name="Dingwen Tao" data-school="CAS" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Dingwen Tao" data-school="CAS" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Dingwen Tao</div>
@@ -1296,7 +1443,10 @@
           <span class="tag">CAS / Formerly Indiana University</span>
           <span class="tag">HPC / Scientific Computing</span>
           <a class="profile-link" href="https://luddy.indiana.edu/contact/profile/?profile_id=1037" target="_blank" onclick="event.stopPropagation()">🔗 Former IU Profile</a>
+        
+          <span class="alert-tag student-dismissal">🚪 Mass Dismissals</span><span class="alert-tag exploitation">💼 Students Abandoned</span>
         </div>
+        <div class="summary-box">Extremely high pressure with sub-one-year dismissals. Changed institutions three times in six years, returning to China with very late notice to students — and continued recruiting new students to his old position after deciding to leave.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1314,7 +1464,7 @@
 <div class="school-section" data-school="caltech">
   <div class="school-header">🏛 Caltech</div>
 
-  <div class="advisor-card" data-name="Anima Anandkumar" data-school="Caltech" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Anima Anandkumar" data-school="Caltech" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Anima Anandkumar</div>
@@ -1323,7 +1473,10 @@
           <span class="tag">ML / Tensor Methods / Scientific ML</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="http://tensorlab.cms.caltech.edu/users/anima/" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag student-dismissal">🚪 Survival-of-Fittest Lab</span><span class="alert-tag mental-health">🧠 Emotional Instability</span>
         </div>
+        <div class="summary-box">Demanding and volatile but resource-rich. Reportedly dismissed from NVIDIA after internal complaints. Runs large intern cohorts with no guarantee of support — poor performers are cut. Strong outcomes for students who survive, including top-10 faculty positions.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1341,7 +1494,7 @@
     </div>
   </div>
 
-  <div class="advisor-card" data-name="Yang Song" data-school="Caltech" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Yang Song" data-school="Caltech" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Yang Song</div>
@@ -1349,7 +1502,10 @@
           <span class="tag">Caltech (appointment deferred)</span>
           <span class="tag">Generative Models / Diffusion</span>
           <a class="profile-link" href="https://yang-song.net" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag student-dismissal">🚪 Students Abandoned</span>
         </div>
+        <div class="summary-box">Accepted PhD students for Caltech before joining, then repeatedly deferred his start and ultimately went full-time at OpenAI — leaving students without a supervisor in a CS-limited environment.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1365,7 +1521,7 @@
 <div class="school-section" data-school="uva">
   <div class="school-header">🏛 University of Virginia</div>
 
-  <div class="advisor-card" data-name="Xiaoxuan Yang" data-school="UVA" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Xiaoxuan Yang" data-school="UVA" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Xiaoxuan Yang</div>
@@ -1373,7 +1529,10 @@
           <span class="tag">UVA</span>
           <span class="tag">Efficient ML / Edge AI</span>
           <a class="profile-link" href="https://xiaoxuanyang.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag mental-health">🧠 Mental Health Impact</span><span class="alert-tag no-guidance">🔵 No Guidance</span><span class="alert-tag coercion">🔒 Coercion</span>
         </div>
+        <div class="summary-box">Exhibits NPD-type behaviour: publicly says 'don't rush' while privately furious at any week without progress. Insufficient funding for number of students recruited. Badmouths students to colleagues. Provides no substantive research guidance — only vague demands for 'unique innovation'.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1396,7 +1555,7 @@
 <div class="school-section" data-school="gwu">
   <div class="school-header">🏛 George Washington University</div>
 
-  <div class="advisor-card" data-name="Howie Huang" data-school="GWU" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Howie Huang" data-school="GWU" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Howie Huang</div>
@@ -1404,7 +1563,10 @@
           <span class="tag">GWU ECE</span>
           <span class="tag">Graph Computing / Systems</span>
           <a class="profile-link" href="https://www.seas.gwu.edu/howie-huang" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag student-dismissal">🚪 Mass Dismissals</span><span class="alert-tag exploitation">💼 OPT Exploitation</span>
         </div>
+        <div class="summary-box">During his promotion years recruited 5 PhD students then dismissed 3 within months of arrival, claiming he couldn't identify their strengths. Required dismissed students to stay on as OPT workers.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1420,7 +1582,7 @@
 <div class="school-section" data-school="nyu">
   <div class="school-header">🏛 NYU</div>
 
-  <div class="advisor-card" data-name="Sherry Yang" data-school="NYU" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Sherry Yang" data-school="NYU" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Sherry Yang</div>
@@ -1429,6 +1591,7 @@
           <span class="tag">Generative Models / RL</span>
           <a class="profile-link" href="https://sherryy.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
         </div>
+        <div class="summary-box">Maintains an oversized candidate pool and is reportedly arrogant in interviews. Very limited information — no specific advisor-student relationship complaints documented.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1444,7 +1607,7 @@
 <div class="school-section" data-school="lehigh">
   <div class="school-header">🏛 Lehigh University</div>
 
-  <div class="advisor-card" data-name="Lichao Sun" data-school="Lehigh" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Lichao Sun" data-school="Lehigh" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Lichao Sun</div>
@@ -1453,7 +1616,10 @@
           <span class="tag">ML / AI Safety / LLMs</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
           <a class="profile-link" href="https://lichao-sun.github.io" target="_blank" onclick="event.stopPropagation()">🔗 Profile</a>
+        
+          <span class="alert-tag academic-misconduct">📄 Research Quality / Review Manipulation</span>
         </div>
+        <div class="summary-box">Primarily a research quality controversy: accused of mass-producing surveys and hype-driven papers, manipulating peer review, and running high-pressure late-night lab culture. Lab members and interns strongly dispute mistreatment, reporting good mentorship, resources, and career support.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1476,7 +1642,7 @@
 <!-- UMN -->
 <div class="school-section" data-school="umn">
   <div class="school-header">🏛 University of Minnesota</div>
-  <div class="advisor-card" data-name="Katie Zhao" data-school="UMN" data-disputed="true" data-rebuttal="true">
+  <div class="advisor-card" data-name="Katie Zhao" data-school="UMN" data-disputed="true" data-rebuttal="true" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Katie Zhao</div>
@@ -1485,6 +1651,7 @@
           <span class="tag">Robotics / Autonomous Systems</span>
           <span class="tag disputed-tag">⚠ Disputed</span>
         </div>
+        <div class="summary-box">Described as very demanding; one student quit. Directly rebutted by someone who says she is easygoing and flexible with deadlines. Low-severity, disputed.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1503,14 +1670,17 @@
 <!-- Upitt -->
 <div class="school-section" data-school="upitt">
   <div class="school-header">🏛 University of Pittsburgh</div>
-  <div class="advisor-card" data-name="Junyu Liu" data-school="UPitt" data-disputed="false" data-rebuttal="false">
+  <div class="advisor-card" data-name="Junyu Liu" data-school="UPitt" data-disputed="false" data-rebuttal="false" data-alerts="">
     <div class="advisor-header" onclick="toggle(this)">
       <div>
         <div class="advisor-name">Junyu Liu</div>
         <div class="advisor-meta">
           <span class="tag">UPitt</span>
           <span class="tag">CS / HCI</span>
+        
+          <span class="alert-tag sexual-harassment">🚨 Sexual Harassment</span>
         </div>
+        <div class="summary-box">Serious and specific sexual harassment allegations: repeatedly invites women to share hotel rooms at conferences after rejection; makes sexual advances on becoming familiar; has made openly sexist remarks about women in academia.</div>
       </div>
       <span class="toggle-icon">+</span>
     </div>
@@ -1530,6 +1700,7 @@
 
 <script>
 let activeFilter = 'all';
+let activeAlert = '';
 
 function toggle(header) {
   const icon = header.querySelector('.toggle-icon');
@@ -1541,41 +1712,42 @@ function toggle(header) {
 
 function doSearch() {
   const q = document.getElementById('search').value.toLowerCase().trim();
-  applyFilters(q, activeFilter);
+  applyFilters(q, activeFilter, activeAlert);
 }
 
-function filterAll(el) { setFilter('all', el); }
-function filterDisputed(el) { setFilter('disputed', el); }
-function filterHasRebuttal(el) { setFilter('rebuttal', el); }
-function filterHasProfile(el) { setFilter('profile', el); }
+function filterAll(el) { activeAlert = ''; setFilter('all', el); }
+function filterDisputed(el) { activeAlert = ''; setFilter('disputed', el); }
+function filterHasRebuttal(el) { activeAlert = ''; setFilter('rebuttal', el); }
+function filterHasProfile(el) { activeAlert = ''; setFilter('profile', el); }
+function filterByAlert(alertType, el) { activeAlert = alertType; setFilter('alert', el); }
 
 function setFilter(type, el) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   activeFilter = type;
-  applyFilters(document.getElementById('search').value.toLowerCase(), type);
+  applyFilters(document.getElementById('search').value.toLowerCase(), type, activeAlert);
 }
 
-function applyFilters(q, filterType) {
+function applyFilters(q, filterType, alertType) {
   const cards = document.querySelectorAll('.advisor-card');
   let shown = 0;
   cards.forEach(card => {
     const name = (card.dataset.name || '').toLowerCase();
     const school = (card.dataset.school || '').toLowerCase();
     const text = card.textContent.toLowerCase();
+    const alerts = (card.dataset.alerts || '');
     const matchesSearch = !q || name.includes(q) || school.includes(q) || text.includes(q);
     let matchesFilter = true;
     if (filterType === 'disputed') matchesFilter = card.dataset.disputed === 'true';
     if (filterType === 'rebuttal') matchesFilter = card.dataset.rebuttal === 'true';
     if (filterType === 'profile') matchesFilter = !!card.querySelector('.profile-link');
+    if (filterType === 'alert') matchesFilter = alerts.includes(alertType);
     const show = matchesSearch && matchesFilter;
     card.classList.toggle('hide', !show);
     if (show) shown++;
   });
   document.getElementById('stat-shown').textContent = shown + ' showing';
   document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none';
-
-  // hide empty school sections
   document.querySelectorAll('.school-section').forEach(section => {
     const visible = [...section.querySelectorAll('.advisor-card')].some(c => !c.classList.contains('hide'));
     section.style.display = visible ? '' : 'none';
